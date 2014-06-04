@@ -9,7 +9,7 @@ FILE_HOME=/etc/vsftpd_user_conf
 
 if [ "$#" -ne "1" ]; then
 	echo "****************************************************************"
-	echo "Usage: sudo sh $0 [argument]"
+	echo "Usage: sh $0 [argument]"
 	echo "Please input the username argument."
 	echo "****************************************************************"
 	exit 1;
