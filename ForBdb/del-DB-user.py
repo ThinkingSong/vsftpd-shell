@@ -17,7 +17,9 @@ FTP_DB='/etc/vsftpd_login.db'
 
 adb = db.DB()
 adb.open(FTP_DB,dbtype = db.DB_HASH)
-adb.delete(sys.argv[1])
+if adb.exists(sys.argv[1]):
+    adb.delete(sys.argv[1])
+    print '\n','.'*20,'Delete user',sys.argv[1],'success!','.'*20,'\n'
+else:
+    print '\n','.'*20,'User',sys.argv[1],'not found in Bdb!','.'*20,'\n'
 adb.close()
-
-print '\n','.'*20,'Delete user',sys.argv[1],'success!','.'*20,'\n'

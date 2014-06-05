@@ -19,11 +19,10 @@ adb.open(FTP_DB,dbtype = db.DB_HASH)
 # print adb.exists(sys.argv[1])
 if adb.exists(sys.argv[1]):
 #   print adb.get(sys.argv[1])
-    print 'User',sys.argv[1],'will be UPDATE.'
-    print '-'*10,'> It\'s OLD value is',adb.get(sys.argv[1])
+    print '>'*3,'It\'s OLD value is',adb.get(sys.argv[1])
+    print '\n','.'*20,'User',sys.argv[1],sys.argv[2],'is UPDATE!','.'*20,'\n'
 else:
-    print 'User',sys.argv[1],'will be ADD.'
+    print '\n','.'*20,'User',sys.argv[1],sys.argv[2],'is ADD!','.'*20,'\n'
 adb.put(sys.argv[1],sys.argv[2])
 adb.close()
 
-print '\n','.'*20,'User',sys.argv[1],sys.argv[2],'is ok!','.'*20,'\n'
