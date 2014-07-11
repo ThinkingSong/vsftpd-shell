@@ -4,8 +4,9 @@
 #  check user for ftp server  #
 ###############################
 
-DB_HOME=/etc
-FILE_HOME=/etc/vsftpd_user_conf
+USER_HOME=/etc/vsftpd_user_conf
+DB_FILE=/etc/vsftpd_login.db
+PWD_FILE=/etc/vsftpduser
 
 if [ "$#" -ne "1" ]; then
 	echo "****************************************************************"
@@ -25,32 +26,32 @@ do
 		echo "$LD";
 	fi
 
-	if [ -e $DB_HOME/vsftpd_login.db ]; then
-		OLD=`db4.8_dump -d a $DB_HOME/vsftpd_login.db | grep "\[\?\?[0 2 4 6 8]\].*len.*data: $user$" | awk -F: '{print $3}'`;
+	if [ -e $DB_FILE ]; then
+		OLD=`db4.8_dump -d a $DB_FILE | grep "\[\?\?[0 2 4 6 8]\].*len.*data: $user$" | awk -F: '{print $3}'`;
 	fi
         #if [ $OLD = $user ]; then
         #        echo "Error: DB-User $user exist.";
         #fi
 	if [ "$OLD" != "" ]; then
 		echo "***Error***: DB-User $user exist.";
-		db4.8_dump -d a $DB_HOME/vsftpd_login.db | grep -A 1 "\[\?\?[0 2 4 6 8]\].*len.*data: $user$";
+		db4.8_dump -d a $DB_FILE | grep -A 1 "\[\?\?[0 2 4 6 8]\].*len.*data: $user$";
 	fi
 
-	if [ -e $DB_HOME/vsftpduser ]; then
-		OLD_FILE=`cat $DB_HOME/vsftpduser | grep "^$user:" |awk -F ":" '{print $1}'`;
+	if [ -e $PWD_FILE ]; then
+		OLD_FILE=`cat $PWD_FILE | grep "^$user:" |awk -F ":" '{print $1}'`;
 	fi
 	if [ "$OLD_FILE" != "" ]; then
 		echo "***Error***: FILE-DB-User $user exist.";
-		cat $DB_HOME/vsftpduser | grep "^$user:";
+		cat $PWD_FILE | grep "^$user:";
 	fi
 
-	if [ -e "$FILE_HOME/$user" ]; then
-		echo "***Error***: File $FILE_HOME/$user exist.";
-                #ls -l $FILE_HOME/$user;
-		cat $FILE_HOME/"$user";
+	if [ -e "$USER_HOME/$user" ]; then
+		echo "***Error***: File $USER_HOME/$user exist.";
+                #ls -l $USER_HOME/$user;
+		cat $USER_HOME/"$user";
 	fi
 
-	if [ "$LD" != "" -o "$OLD" != "" -o "$OLD_FILE" != "" -o -e "$FILE_HOME/$user" ]; then
+	if [ "$LD" != "" -o "$OLD" != "" -o "$OLD_FILE" != "" -o -e "$USER_HOME/$user" ]; then
 		echo "\n...................... Please check it! ......................\n";
 	else
 		echo "\n...................... No this user: $user! .....................\n"
