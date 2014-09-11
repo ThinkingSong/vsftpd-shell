@@ -16,9 +16,16 @@ FTP_DB='/etc/vsftpd_login.db'
 
 adb = db.DB()
 adb.open(FTP_DB,dbtype = db.DB_HASH)
-# print adb.exists(sys.argv[1])
-if adb.exists(sys.argv[1]):
-#   print adb.get(sys.argv[1])
+
+
+#### python2.6 does not support this parameter ####
+## print adb.exists(sys.argv[1])
+## if adb.exists(sys.argv[1]):
+#### http://www.jcea.es/programacion/pybsddb_doc/4.7.3/db.html ####
+#### http://www.jcea.es/programacion/pybsddb_doc/4.8.4/db.html ####
+
+# print adb.get(sys.argv[1])
+if adb.get(sys.argv[1]):
     print '>'*3,'It\'s OLD value is',adb.get(sys.argv[1])
     print '\n','.'*20,'User',sys.argv[1],sys.argv[2],'is UPDATE!','.'*20,'\n'
 else:
