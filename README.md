@@ -1,6 +1,6 @@
 # vsftpd-shell
 
-**vsftpd**使用了**pam**认证：ladp、Berkeley db、libpam-pwdfile.
+**vsftpd**使用了**pam**认证：Ladp、Berkeley db、libpam-pwdfile.
 
 * check-user.sh 检查一个账号是否已经存在。
 * pwdfilepasswd.sh pwdfile 认证账号加密密码设置。
